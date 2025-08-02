@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: algorithm-service
+
+logging:
+  level:
+    com.gm.study: DEBUG

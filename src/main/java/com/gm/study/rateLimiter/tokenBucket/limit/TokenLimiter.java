@@ -1,4 +1,4 @@
-package com.gm.study.rateLimiter.tokenBucket;
+package com.gm.study.rateLimiter.tokenBucket.limit;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,10 +13,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 维度1: 把限流器做进拦截器
  * 维度2: 单接口所有流量共享一个限流器
  */
-public class TokenLimiter implements RateLimiter{
+public class TokenLimiter implements RateLimiter {
 
     // 创建静态的定时器
     private static ScheduledExecutorService SCHEDULER = Executors.newScheduledThreadPool(1);
+
+    // 添加停机钩子
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            SCHEDULER.shutdown();
+        }));
+    }
 
 
     // 令牌最大容量
@@ -73,5 +80,4 @@ public class TokenLimiter implements RateLimiter{
                 tokens.compareAndSet(current, Math.min(capacity, current + rate));
             }, 0, 1, TimeUnit.SECONDS);
     }
-
 }

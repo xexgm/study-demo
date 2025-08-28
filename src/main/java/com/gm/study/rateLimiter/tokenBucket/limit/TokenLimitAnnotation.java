@@ -1,4 +1,4 @@
-package com.gm.study.rateLimiter.tokenBucket;
+package com.gm.study.rateLimiter.tokenBucket.limit;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,12 +11,14 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Limit {
+public @interface TokenLimitAnnotation {
 
     String interfaceName();
 
-    int capacity();
+    int capacity() default 1000;
 
+    int rate() default 200;
 
+    int initTokens() default 1000;
 
 }

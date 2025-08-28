@@ -1,4 +1,4 @@
-package com.gm.study.rateLimiter.tokenBucket;
+package com.gm.study.rateLimiter.tokenBucket.limit;
 
 /**
  * @author: xexgm
